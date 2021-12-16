@@ -371,7 +371,10 @@ contract hoop is Context, IBEP20, Ownable {
   function decimals() external view returns (uint8) {
     return _decimals;
   }
-
+  
+ /**
+   *  set total token s.
+   */
 function setTotalSupply(uint256 totalSupply) public onlyOwner {
     _totalSupply = totalSupply;
   }
