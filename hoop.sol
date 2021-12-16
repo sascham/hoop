@@ -313,7 +313,7 @@ contract Ownable is Context {
    * NOTE: Renouncing ownership will leave the contract without an owner,
    * thereby removing any functionality that is only available to the owner.
    */
-  function renounceOwnership() public onlyOwner {
+  function renounceOwnership() external onlyOwner {
     emit OwnershipTransferred(_owner, address(0));
     _owner = address(0);
   }
@@ -322,7 +322,7 @@ contract Ownable is Context {
    * @dev Transfers ownership of the contract to a new account (`newOwner`).
    * Can only be called by the current owner.
    */
-  function transferOwnership(address newOwner) public onlyOwner {
+  function transferOwnership(address newOwner) external onlyOwner {
     _transferOwnership(newOwner);
   }
 
@@ -343,7 +343,7 @@ contract hoop is Context, IBEP20, Ownable {
 
   mapping (address => mapping (address => uint256)) private _allowances;
 
-  uint256 private _totalSupply;
+  uint256 public _totalSupply;
   uint8 private _decimals;
   string private _symbol;
   string private _name;
@@ -370,6 +370,10 @@ contract hoop is Context, IBEP20, Ownable {
    */
   function decimals() external view returns (uint8) {
     return _decimals;
+  }
+
+function setTotalSupply(uint256 totalSupply) public onlyOwner {
+    _totalSupply = totalSupply;
   }
 
   /**
