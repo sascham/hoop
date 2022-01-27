@@ -347,12 +347,13 @@ contract hoop is Context, IBEP20, Ownable {
   uint8 private _decimals;
   string private _symbol;
   string private _name;
+  uint256 totalSupply_;
 
   constructor() public {
     _name = "Primal Hoop";
     _symbol = "HOOP";
     _decimals = 18;
-    _totalSupply = 300000000;
+    _totalSupply = 350000000000000000000000000;
     _balances[msg.sender] = _totalSupply;
 
     emit Transfer(address(0), msg.sender, _totalSupply);
@@ -372,13 +373,7 @@ contract hoop is Context, IBEP20, Ownable {
     return _decimals;
   }
   
- /**
-   *  set total token s.
-   */
-function setTotalSupply(uint256 totalSupply) public onlyOwner {
-    _totalSupply = totalSupply;
-  }
-
+ 
   /**
    * @dev Returns the token symbol.
    */
@@ -501,10 +496,16 @@ function setTotalSupply(uint256 totalSupply) public onlyOwner {
    *
    * - `msg.sender` must be the token owner
    */
-  function mint(uint256 amount) public onlyOwner returns (bool) {
-    _mint(_msgSender(), amount);
-    return true;
-  }
+  
+ function mint(address _to, uint256 _amount) external onlyOwner {
+        if (totalSupply_.add(_amount) <= _totalSupply) {
+            _mint(_to, _amount);
+        } else {
+            revert("Max supply exceeded");
+        }
+    }
+
+
 
   /**
    * @dev Moves tokens `amount` from `sender` to `recipient`.
