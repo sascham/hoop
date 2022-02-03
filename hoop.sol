@@ -347,7 +347,7 @@ contract hoop is Context, IBEP20, Ownable {
   uint8 private _decimals;
   string private _symbol;
   string private _name;
-  uint256 totalSupply_;
+ // uint256 totalSupply_;
 
   constructor() public {
     _name = "Primal Hoop";
@@ -498,7 +498,7 @@ contract hoop is Context, IBEP20, Ownable {
    */
   
  function mint(address _to, uint256 _amount) external onlyOwner {
-        if (totalSupply_.add(_amount) <= _totalSupply) {
+        if (_totalSupply.add(_amount) <= _totalSupply) {
             _mint(_to, _amount);
         } else {
             revert("Max supply exceeded");
